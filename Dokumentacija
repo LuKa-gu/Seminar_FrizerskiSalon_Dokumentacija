@@ -1,0 +1,55 @@
+DOKUMENTACIJA APLIKACIJE
+
+1. Splošni opis arhitekture aplikacije
+
+Arhitektura sistema
+
+Aplikacija je zasnovana po principu klient–strežnik (client–server) arhitekture in je razdeljena na tri glavne plasti: podatkovno plast, zaledni del (backend) in odjemalce (spletni in mobilni odjemalec).
+
+1.1 Podatkovna plast
+
+Podatkovna plast temelji na relacijski bazi MySQL, ki teče lokalno v okolju XAMPP.
+Baza hrani vse trajne podatke sistema, kot npr. uporabnike, frizerje, termine, ter relacije med njimi).
+Dostop do baze je mogoč izključno preko zalednega dela aplikacije.
+
+1.2 Zaledni del (Backend)
+
+Zaledje je implementirano v Node.js z uporabo ogrodja Express.
+Deluje kot REST API, ki:
+- sprejema HTTP zahtevke od odjemalcev,
+- izvaja poslovno logiko,
+- komunicira z MySQL bazo ter
+- vrača odgovore v obliki JSON.
+
+Backend predstavlja centralno točko sistema in skrbi za varnost, validacijo podatkov ter nadzor nad dostopom do baze.
+
+1.3 Odjemalci
+
+Sistem vključuje dva odjemalca, ki oba komunicirata z zaledjem preko istega REST API-ja z uporabo protokola HTTP in podatkovnega formata JSON.
+
+- Spletni odjemalec
+Implementiran kot Node.js Express aplikacija, ki uporabniku omogoča interakcijo s sistemom preko spletnega brskalnika. 
+Z zaledjem komunicira preko HTTP zahtevkov na REST API ter prejema in pošilja podatke v obliki JSON.
+
+- Mobilni odjemalec
+Razvit v okolju Android Studio. Mobilna aplikacija prav tako uporablja HTTP zahtevke za dostop do istega REST API-ja ter izmenjuje podatke v JSON formatu za prikaz in obdelavo informacij v aplikaciji.
+
+1.4 Komunikacija med komponentami
+
+Komunikacija poteka po naslednjem principu:
+
+Odjemalec → HTTP zahtevek → Backend (Express) → MySQL baza
+MySQL baza → Backend → JSON odgovor → Odjemalec
+
+Odjemalci nimajo neposrednega dostopa do baze podatkov.
+
+2. Podatkovni model
+
+Opis podatkovnega modela aplikacije je podan s screenshotom tabel iz baze s pripadajočimi atributi ter relacijami (screenshot_podatkovniModel_frizerskiSalon.png).
+Prav tako je zraven podana še izvožena MySQL podatkovna baza projekta v obliki datoteke sql (Baza_FrizerskiSalon.sql).
+Oboje se nahaja poleg te datoteke v tem GitHub repozitoriju.
+
+3. API dokumentacija zaledja
+
+API dokumentacija zaledja je bila ustvarjena s pomočjo orodja Swagger, in je dostopna ob prenosu in vzpostavitvi zalednega dela projekta na naslovu: http://localhost:3000/api-docs.
+Zaledni del projekta se nahaja na GitHub repozitoriju: https://github.com/LuKa-gu/Seminar_FrizerskiSalon_Backend.
